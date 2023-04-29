@@ -59,7 +59,8 @@ run second command firstly on terminal then on your firebase console by clicking
 run third command firstly on terminal then on your firebase console by clicking on it i.e, firebase deploy
 
 
-
+## to stop the running firebase command :
+    "ctrl + c" , this will stop the running firebase command 
 
 
          
