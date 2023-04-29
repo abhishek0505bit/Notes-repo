@@ -38,7 +38,11 @@ ans ) firebase deploy
 
 updation :
 update your projects and after updation , use the same command again on the terminal :
-"firebase deploy"
+npm run build
+firebase serve // this command is used to see the changes in the website at port : 5000
+"firebase deploy" // this finally deploys the website on the same url 
+
+if changes are not reflected on your site , then click "ctrl + shift + r" on chrome port:5000 to hard refresh of the cache., this will definitely help 
 
 the changes will reflect on the same url 
 
@@ -53,6 +57,8 @@ on build -> hosting
 run first command (on console not on terminal because firebase is already installed on system globally)
 run second command firstly on terminal then on your firebase console by clicking on it i.e, firebase init 
 run third command firstly on terminal then on your firebase console by clicking on it i.e, firebase deploy
+
+
 
 
 
