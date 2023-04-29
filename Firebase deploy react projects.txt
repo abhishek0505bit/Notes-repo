@@ -1,0 +1,46 @@
+How to deploy your website in firebase  for free?
+ans)  npm install -g firebase tools	: this will install firebase CLI
+         
+step 2) login to firebase
+ firstly login in browser , 
+ then login in your vs code editor using the command : firebase login 
+
+step 3) initialize your project :
+use the command : firebase init 
+
+step 4)Are you ready to proceed?
+ans: yes
+
+step 5) which  firebase features do you  want to set up for this directory? press space to select features , then enter to confirm your choice.
+ans)Hosting: configure files for firebase hosting and (optionally) set up GitHub Action Deploys 
+
+step 6) Please select an option.
+ans) Use an existing project 
+
+step 7) Select a default Firebase project for this directory:
+ans) select your existing project 
+
+step 8) what do you want to use as your public directory?
+ans) build 
+
+step 9) configure as a single-page app( rewrite all urls to /index.html)?
+ans) Yes
+
+step 10) set up automatic builds and deploys with Github ? 
+ans) No
+
+step 11) if you haven't run "npm run build" command before , run " npm run build "
+
+step 12) after your poject is built, run  the deployment command 
+ans ) firebase deploy
+
+
+
+updation :
+update your projects and after updation , use the same command again on the terminal :
+"firebase deploy"
+
+the changes will reflect on the same url 
+
+
+         

@@ -1,0 +1,18 @@
+what we will learn through this project?
+1-create react app
+2-components - Functions, class
+3-JSX
+4-Props State
+5-Use State, Use Effect
+6-Components Lifecycle Methods
+7-Conditional Rendering
+8-List and keys 
+9-Basic form handling
+10-React Project Structure
+11-Routing React Router
+12-Programmatic Navigation
+13-set up json server
+14-API calls 
+15- React CRUD operations
+16-React Search Filter
+17-React Hooks

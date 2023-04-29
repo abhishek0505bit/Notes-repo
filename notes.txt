@@ -1,0 +1,270 @@
+##
+Install node js current version
+write the command node -v, which will give the version of node
+
+Do all these things in vs code
+create react app:
+	npx create-react-app app_name
+use npm start to start the application 
+
+
+In index.js ,
+	we have ReactDOM.render which is actually going to render our application 
+in the root div which we saw in index.html
+
+delete all the unnecessary stuff becuase we gonna make every thing from the scratch
+i.e, In public, delete logo192,logo512, manifest.json, robots.txt
+In src, delete app.test.js, index.css, logo.svg, reportwebvital, setupTests.js
+
+
+
+##
+create a directory of components, images under src folder
+In components, make :
+header.js
+AddContact.js
+ContactList.js
+ContactCard.js
+move app.js and app.css in the components folder
+
+
+
+##
+we gonna use semantic ui library in this project to apply styling and all css
+To add semantic ui on your react page:
+    go to cdnjs.com page, type semanic ui, copy the css code i.e, link code
+    add that in index.html by replacing it with manifest link
+    the semantic ui is applied on to your page
+
+
+
+##
+Components:
+    components is a piece of reusable code which can be reused 
+
+app.js:
+    app.js is an app component
+    initially we are returning a div fromm that app component
+    The app.js looks like a html but it is not a html, It is called the jsx which is the combination of javascript and html because you cannot write an html in a javascript file 
+    now we will import React from 'react' 
+    import all the elements from './element_name'
+
+Function component:
+    Open Header.js:
+        import React from 'react'
+        here we gonna use arrow function as a functional component
+        after writing the function , export it by writing: 
+        export default Header;
+
+Class Component:
+    Open AddContact.js
+        import React from 'react'
+        class AddContact extends React.Component{
+            render()
+            {
+                return(
+                    <div>
+
+                    </div>
+                )
+            }
+
+        }
+        export default AddContact;
+        //you can take the reference from the addcontact component from this project 
+
+    Open ContactList.js
+        make a functional component, 
+
+    uncomment it from the app.js file 
+    
+    now styling app component:
+        div class name =" ui container"
+
+
+
+##
+Rendering List in React & Props-pass data from parent child:
+    In app.js:
+        create a list of contacts 
+        
+        now in order to pass this contacts in contacts list, we use props .
+        in order to use the props write contacts as the property in ContactList tag and pass the prop whichever you want
+
+        syntax of that prop is as follows :
+        <tag_name property_name={object/variable}/>
+            <ContactList contacts={contacts_list}/>
+            now this contacts_list can be accessed in the ContactList.js file via props 
+        {prop} can be accesed in other files via prop
+
+
+
+##
+ACCESS PROPS:
+    Go to ContactList.js:
+
+        const ContactList=(props)=>{
+            return()
+        }
+
+RENDERING A LIST/ TRAVERSING AN ARRAY IN REACT:
+    const fun_name=object.map((item)=>{jsx})
+
+    const fun_name=
+    object.map( (item,key)=>{return(<div>item.id/item.title </div>)} )
+        Create a function :
+            const renderContactList=props.contacts.map((contact)=>{
+                return(
+                    <div className="item">
+                        <div className="content">
+                            <div className="header">{contact.name}</div>
+                            <div>{contact.email}</div>
+                        </div>
+                        <i className="trash alternate outline icon"></i>
+                    </div>
+                    )
+                })
+
+
+
+##
+REFERENCE VARIABLE IN JSX:
+    we see that the part inside render contact list  return(jsx) is repeating, so we will copy that jsx and make the component of that jsx with name ContactCard.js.. for reference , go to ContactCard.js
+
+
+
+##
+ADDING INLINE STYLE:    
+    in contact card.js under <i> tag:
+        <i style={{color:'red',marginTop:'7px'}}
+
+
+but we dont have the contact list in our contact card, so we will again use the props in COntactCard.js to receive those Contact array from contact list
+
+After modification, the files are:
+=>ContactList.js:
+    import React from "react";
+    import ContactCard from './ContactCard'
+    function ContactList(props){
+        const renderContactList=props.contacts.map((items)=>{
+            return(
+                <ContactCard item={items}></ContactCard>
+            )
+        })
+        return(
+            <div className="ui celled list">
+                {renderContactList}
+            </div>
+        )
+    }
+    export default ContactList;
+
+=>contactCard.js:
+    import React from "react";
+    const ContactCard=(props)=>{
+        return(
+            <div className="item">
+            <div className="content">
+                <div className="header">{props.item.name}</div>
+                <div>{props.item.email}</div>
+            </div>
+            <i className="trash alternate outline icon"></i>
+            </div>
+        )
+    }
+    export default ContactCard;
+
+
+
+##
+ADD IMAGES IN REACT:
+    download png image 
+    put that image in src/images
+    to add that image in contactCard.js, In ContactCard.js under return()
+        import user from '../images/user.png'
+        <img className="ui avatar image"src={user} alt="user"/>
+
+
+
+##
+USE STATE REACT HOOK:
+    If we are using functional components, then we gonna make use of react hooks
+    open App.js:
+        now in the place of static contact list, we gonna use useState:
+        we gonna make use of useState in app.js
+    we want the functionality as , if we click on the add button, it get added to the contact list.
+    so now open addcontact.js:
+    we done this in input of name and email both:
+         <input type="text" name="email" placeholder="Enter your email" onChange={(e)=>this.setState({email:e.target.value})} value={this.state.email}/>
+     In form tag: 
+        <form className="ui form " onSubmit={this.add}>
+
+    In addContact.js:
+        make add function..
+    
+
+
+Now what we want to do , when we click on the add button, it gets added in the contacts list , which is present in app.js
+for that  we have to pass the object to the App component, and that we can do with the help of function as a prop 
+##
+FUNCTION AS A PROP :
+    if we want to pass a data from a parent to a child,
+    we use props
+
+    if we want to pass a data from a child to a parent, 
+    we gonna use function as a prop i.e,
+    pass a handler function from the parent to the child 
+    component that accepts an argument which is the
+    data from the child component.
+
+    make addContactHandler function in App.js
+        <AddContact addContactHandler={addContactHandler}/>
+
+        this addContactHandler function will take contact list as the parameter.
+        by doing this, place console.log(object)
+         with that we can see that the object is available at both App component and AddContact component 
+
+
+
+##
+UPDATE STATE WITH SETSTATE():
+    we want that when we click on the add button , we want to clear all those fields .
+    so for that we will use set_state function.
+
+    setState({name:"", email:""})
+
+    so hopefully we have accessed the contacts list in app component and add contact.
+    now we want that after clicking on the add button it get added to the contact state.
+    for that we use the spread operator:
+         setContacts([...contacts,contact]);//this will append the new {contact} in the old {contacts} list
+    //but when we refresh, the contacts get disappeared because we are not storing the data anywhere. so for that problem , we gonna use the local storage
+    for local storage we gonna use useEffect()
+
+
+
+##
+USE EFFECT() REACT HOOK:
+    import {useEffect} from 'react';
+
+    USE OF useEffect:
+        whenever the value changes, useEffect helps us to re render the page without refreshing the page.
+        Conceptually, we want it to happen after every render thatswhy we use useEffect
+        In app.js:
+            import React, {useEffect, useState} from 'react';
+            const LOCAL_STORAGE_KEY="contacts";
+             useEffect(()=>{
+            localStorage.setItem(LOCAL_STORAGE_KEY,JSON.stringify(contacts))
+            },[contacts])    //useEffect will do some functionality and update the contacts
+
+            we want that we information doesn't vanish after the page refresh..
+            so add this code below the previous useEffect block:
+                
+
+
+##
+DELETING THE CONTACT WHICH WE HAVE CREATED:
+    we have to provide the items of list a unique ID, which can be done by installing uuidv4
+    npm i uuidv4
+    this statement will give us unique  id for each element 
+    //uuid : this uuid gives the unique  id to the elements in the list that helps in deleting the elements 
+    //with the help of uuid we will be able to delete the elements of the list with  the help of the id 

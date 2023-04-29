@@ -1,0 +1,204 @@
+## what is git?
+git is a method to save the history of your files 
+
+
+## install git with default settings 
+
+
+## use git --version in terminal  to check whether git  is installed correctly or not
+
+
+## if we have installed the  git  for the very first time, then we have to set the config:
+config is telling our username and email to github, so that whenever we change any line, people get to know about it 
+
+## git config --global user.name " ur name "
+    git config --global user.email "ur email"
+
+
+## check by typing:
+    git config --global user.email
+    it should give ur email as output otherwise you have used wrong command 
+
+
+## git config --global --edit:
+    this will open the vim editor, there you can perform the changes directly in config file 
+    after you have saved the changes press esc colon w q
+
+
+##  mkdir dirName:
+    this command is used to create a folder in the current folder
+
+
+## Repository in github:
+    A repository in GitHub is a place where code and related files are stored and managed. It's like a folder or directory that contains all the files, documents, images, or other resources that make up a project.
+
+    Each repository in GitHub has its own unique URL and can be accessed by anyone who has the link. Users can create and manage their own repositories, or contribute to others' repositories by making changes and submitting them for review.
+
+
+## first reach out to your  project directory,
+    then type the command //git init
+
+    this will initialize  your project in the git 
+    type ls to check the files in the current project directory
+
+
+## to add untracked file :(staging area)
+ use git add <file name>
+ this will add the  file to the staging area 
+
+
+ ## to commit we use :
+  git commit -m "message of commit"
+  to commit all files we use : git commit -a -m "all changes done"
+
+
+## use git log to see all the commits 
+after watching all the commits , press q to exit the log terminal 
+
+
+## If you try to commit changes without first staging them, you can use the git commit -a command instead
+
+
+## If you try to commit changes in Git without first staging them using the git add command, Git will not include those changes in the commit. Instead, Git will display an error message indicating that there are no changes staged for commit.
+
+When you make changes to the files in your Git repository, you need to first stage those changes using the git add command. This tells Git to track the changes and include them in the next commit. Once you have staged the changes, you can create a commit that records the changes to the repository using the git commit command.
+
+If you try to commit changes without first staging them, you can use the git commit -a command instead. This command will automatically stage and commit any changes to files that are already tracked by Git. However, it's generally recommended to use the git add command to stage changes before committing, as it gives you more control over what changes are included in each commit.
+
+
+## to go back to any commit:
+     we use: git checkout <commit hash code>
+
+
+## checkout command:
+ checkout command can also be used to switch from one branch to other
+
+
+ ## git branch:
+  git branch command is used to retrieve the current branch
+  usually we start from the master branch 
+
+
+## how to create a new branch:
+    working with  team members , each member should create their own branch and perform changes in their own branch so that the entire software is not effected.
+    git branch <new branch name>
+    eg, git branch dev
+    this will create a new branch which is named as dev
+
+
+## to switch from master branch to dev branch:
+    git checkout dev
+    
+
+## git branch <new branch>
+    git checkout <new branch>
+    is equivalent to 
+    git checkout -b <new branch> : this will create a new branch and also switch to that branch 
+    **convention to follow while making a branch:
+    git checkout -b abhishek/feature
+
+
+## merge the next branch to the  previous branch:
+    git merge <branch-name>
+    eg, git merge abhishek/feature
+    then it woould get merge in the master branch 
+
+
+## git log :
+to see all the commits done 
+
+## git status :
+     to see which are tracked and untracked files by the git 
+
+
+## git checkout <branch-name>:
+     to switch from one branch to another 
+
+## how to create .gitignore file:
+    .gitignore file is ignored by the git 
+    whatever files we add in the .gitignore gets ignored by the git automatically
+    to create .gitignore:
+    command : touch .gitignore
+    or directly create .gitignore file in the current directory 
+
+
+
+
+
+
+
+
+
+    PUSHING THE CODE IN THE GITHUB:
+    
+    step 1) new repository/repository name/
+    write description , set as public 
+    create repository
+
+    step 2) we are pushing an existing repository from cmd:
+    git remote add origin https://github.com/abhishek0505bit/contact-project-app.git
+
+    step -3) to check fetch and push method :
+    git remote -v
+
+    step 4) git branch -M main
+
+    step 5) git push -u origin main
+
+    for further changes :
+    after you perform changes , type :
+    git add <file name>
+    git commit -m "message"
+    git push 
+    // no need to write origin master because by default it will push in origin master 
+
+## to add multiple branches in git hub:
+    git checkout abhishek/branch
+    git push -u origin abhishek/branch
+
+
+## OPTIONAL : working in a team :
+    adding collaborators for your repo:
+        go to settings -> manage access -> invite collaborator     
+
+
+    for open source contribution :
+         go to the user's profile: 
+            click on the fork icon(top right corner)
+
+        when you click on the fork button  , the  same copy is made on your github also 
+         In this copy we can do multiple changes, whatever we want
+
+        how to do changes on forked repository:
+            click on code download arrow button, copy the https link i.e, repo url 
+
+        open the empty folder :
+            git clone <repo url>
+
+            do the updations using all git commands 
+
+        after the changes are performed, you can go for pull request :
+        HOw to do pull request:
+            on your git hub cloned repository:
+                click on contribute, below code icon 
+                create pull request -> write message -> create pull  request 
+
+        fork -> clone -> changes -> push -> pull request 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
