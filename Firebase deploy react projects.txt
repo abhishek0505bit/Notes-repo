@@ -43,4 +43,17 @@ update your projects and after updation , use the same command again on the term
 the changes will reflect on the same url 
 
 
+--------------------------------------Firebase console important points-----------------------------------------------------------------------
+after creating a project 
+go to web option -> 
+make a project with a "name" with default  firebase account
+don't click on the checkbox "Also set up Firebase Hosting for this app"
+register app -> continue to console 
+on build -> hosting 
+run first command (on console not on terminal because firebase is already installed on system globally)
+run second command firstly on terminal then on your firebase console by clicking on it i.e, firebase init 
+run third command firstly on terminal then on your firebase console by clicking on it i.e, firebase deploy
+
+
+
          
