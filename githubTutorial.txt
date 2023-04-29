@@ -186,8 +186,18 @@ to see all the commits done
         fork -> clone -> changes -> push -> pull request 
 
 
+## Remove the already added remote origin from a file :
+    git remote rm origin
+    for checking : git remote -v  //if this command produces nothing, that means you have successfully removed the origin 
 
 
+## Error :Another git process seems to be running in this repository, e.g.
+    an editor opened by 'git commit'. Please make sure all processes
+    are terminated then try again. If it still fails, a git process
+    may have crashed in this repository earlier:
+    remove the file manually to continue.
+    
+        Solution : rm .git/index.lock
 
 
 
