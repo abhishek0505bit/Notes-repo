@@ -1,0 +1,11 @@
+to-do-app:
+https://to-do-list-761ce.web.app/
+https://to-do-list-761ce.firebaseapp.com/
+
+restaurant-app:
+https://rest-481a8.web.app/
+https://rest-481a8.firebaseapp.com/
+
+weather-app:
+https://weather-app-7bf05.web.app/
+https://weather-app-7bf05.firebaseapp.com/
