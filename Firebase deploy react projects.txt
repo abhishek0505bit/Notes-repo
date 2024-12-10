@@ -28,6 +28,7 @@ ans) Yes
 
 step 10) set up automatic builds and deploys with Github ? 
 ans) No
+You can select Yes, if you want to automate the process of building and deploying your application to Firebase Hosting whenever you push changes to specific branches in your GitHub repository.
 
 step 11) if you haven't run "npm run build" command before , run " npm run build "
 
