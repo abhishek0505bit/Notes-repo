@@ -1,0 +1,55 @@
+## installing docker locally.
+    - once docker is installed locally, we can log in or sign up via google or github to connect with it.
+
+## installing docker on aws
+    - Login to aws console using root user login..
+    - click on 'Dont have' if the dashboard asks to login for IAM user, then login using 'root user login'
+    - use abhisheksdet2611 google account and password is 2611 based.. 
+    - go to ec2 instance -> and then click on launch instance
+    - give the name as "docker-in-one-shot"
+    - take os image as "ubuntu" 
+    - choose the instance type as t3.micro or any other instance type which show "free tier available"
+    - create a key-pair under key-pair section: 
+        name it as "docker-in-one-shot-key"
+        key-pair type as "RSA"
+        private key file format as ".pem"
+    - under network settings, keep the settings as it is
+    - keep the "configure storage" as it is
+    - launch the instance
+    - instance will get started and it will give you the link of the created instance 
+    - then you will see the instance name, connect, instance state, actions..
+    - these options: 
+        connect: tells if you want to connect your instance
+        instance state: under this, you can start, stop or terminate(delete) your instance 
+        actions: the other actions you can perform here
+    - click on connect, we will connect to client using ssh client [ssh client is nothing but a terminal where ssh is installed]
+        so select ssh client option, and we will perform all the steps mentioned in that section
+        and then open the terminal : 
+            locate the docker-in-one-shot-key.pem key:
+                cd downloads -> ls docker-in-one-shot-key.pem (this command will check that do we have any file with this name) 
+                    the above command should return docker-in-one-shot-key.pem, shows we have this key in our downloads folder
+            run the step 3 command from aws connect on terminal: chmod 400 "docker-in-one-shot-key.pem"
+            run the step 4 command from aws connect on terminal: ssh -i "docker-in-one-shot-key.pem" ubuntu@ec2-16-171-197-229.eu-north-1.compute.amazonaws.com to connect to the instance
+            type yes, and then you will be able to use the ubuntu instance, and could see the ubuntu terminal 
+    - now under ubuntu terminal: 
+        type: `sudo apt-get update` [to update the ubuntu ]
+        install docker.io: `sudo apt-get install docker.io` [under docker.io we get: docker cli, daemon, engine and client and everything]
+        it will take around 288 MB space, and press yes to install it.. once done.. we will check whether docker service is running or not
+        type: `sudo systemctl status docker` 
+            it should output as active(running) and we can see the docker engine, docker daemon and under that we can see docker containter- basically the whole docker architecture
+        now we will check the containers running currently using `docker ps`: It should show an error that permission denied... to fix that issue: 
+            first we need to add the user in the docker group with commmand: `sudo usermod -aG docker $USER`
+            then we need to refresh the groups: `newgrp docker`
+            now run :  `docker ps` [It wont give error now]
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+## Docker Images: 
+
+
+        
+
+
+                
+
+    
+
