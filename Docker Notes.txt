@@ -44,6 +44,19 @@
 -----------------------------------------------------------------------------------------------------------------------------------------
 
 ## Docker Images: 
+    we have dockerfile: it contains a set of instructions on how to build a docker image.
+    docker image is the result of building a docker file `docker build -t my-node-app .`
+        reads the dockerfile
+        executes each instruction line by line
+        Packages everything (Node + your app + dependencies) into a single image.
+    docker container is the running instance of a docker image: `docker run -d -p 3000:3000 my-node-app`
+        this command starts a new container from the image: my-node-app
+        runs it in detached mode (-d)
+        maps port of our machine 3000 to the port of the container 3000 (-p 3000:3000)
+
+    dockerfile -> build -> docker image -> run the image -> docker containers
+
+
 
 
         
