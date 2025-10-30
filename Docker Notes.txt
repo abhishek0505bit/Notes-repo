@@ -56,6 +56,39 @@
 
     dockerfile -> build -> docker image -> run the image -> docker containers
 
+    question) so for every image, do I need to write specific dockerfile..?
+    ans) no, you can directly pull the image using docker pull, 
+        now lets understand how can we do this: 
+        - docker login : use this command in docker cli(terminal).. and provide your dockerHub credentials.. and login into it
+        - give username: as your docker hub username
+        - give password as: your dockerhub password  or generate a personal access token and use it
+        - once logged in: 
+            - docker pull hello-world
+            - docker images
+            - docker run hello-world
+            the above commands will first the public image: hello world into my docker images, then docker images command will let us see what images do we have in
+            docker images section, and then we will run the hello-world image.. which will create the container and we can see the output
+            - docker run hello-world: this command is equivalent to docker pull + docker run image.. if image is not present locally, it will download that image
+            and run that image...
+            - similarly we can download multiple images: for eg: mysql.. use docker pull mysql
+                - and then we can run sql commands under its container
+                - for running mysql we use: docker run -e MYSQL_ROOT_PASSWORD=root mysql, 
+                    since my sql is a server, 
+                    we use docker run command using the environment variable as MYSQL ROOT PASSWORD = someValue.. and run the server
+                    mysql has started
+
+    question) how do we come out of the screen, when the container is running, for eg.. we are inside mysql container..?
+    ans) whenever we run a container, it blocks the screen or terminal.. so for that we can do two things: 
+        1) we can run the container in detached mode using -d tag.. 
+            docker run -d -e MYSQL_ROOT_PASSWORD=root mysql
+        2) we can again connect to the aws instance.. and go to cd/downloads and start a new instance:
+            then we can say: docker stop <docker_container_id>, this will stop the container.. and we can see the terminal is unblocked by sql or any other
+            container
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Dockerfile for Java Application: 
+            
+
 
 
 
