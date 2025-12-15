@@ -87,6 +87,98 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Dockerfile for Java Application: 
+    - we will clone the simple-java-docker repo from londheshubham153 git account, 
+    - we will open our aws ec2 ubuntu instance in terminal: 
+        - type ls: it should show 'nothing', since we dont have anything her
+        - now, 'git clone https://git..........."
+        - now 'ls': we should see 'simple-java-docker' project
+        - cd 'simple-java-docker'
+        - ls: we should see three files: dockerfile, readme.md, src
+        - since docker file is already written, so we will delete this file, and will write docker file from scratch and will run this project
+        - 'rm -v dockerfile' : '-v' is 'verbose tag' that is used to show on o/p that dockerfile is removed.. 
+             we have removed docker file to write it from scratch for the better understanding
+        - on terminal: 
+            - vim Dockerfile: this opens the vim editor and the file would be named as Docker file, 
+                after the Dokcker file is completed, use: 
+                    => :wq -> write and quit, that means save and close
+                    => :q! -> quit without saving
+                once Dockerfile is saved and closed: 
+                    => cat Dockerfile -> to open the Dockerfile in the read mode, ie, to view contents of dockerfile
+                    => ls -> to view all files and folders in the current directory
+            UNDERSTANDING DOCKER FILE: 
+                FROM: use to pull images which will give all required tools and libraries, eg: FROM openjdk:17-jdk-alpine
+                WORKDIR: directory where the application will run on the container. eg: WORKDIR /app
+                COPY: use to copy the content from host to container. eg: COPY . . // this means we are copying everything from host to container
+                RUN: this is used to run any command, not to run the application. eg: RUN javac src/Main.java //this compiles main.java file 
+                CMD: this is used to execute or run the application. eg: CMD ["java", "Main"], but in your case: ["java", "-cp", "src", "Main"], if Main class
+                    is in /src folder of /app directory
+
+                    we have similar command to CMD to run the app i.e, ENTRYPOINT. Difference is: 
+                        CMD can be overridded, while running the docker run command in the terminal 
+                        ENTRYPOINT can't be overridded, while running the docker run command in the terminal 
+
+        - similarly we will create the python docker file using FROM, WORKDIR, RUN AND CMD 
+            after creating the Dockerfile for python.
+            we tried to build the image and run the container on port 80 using command: docker run -p 80:80 flask-app 
+            so in aws -> instances -> ipv4 public address: when we open this address with http, it should open 
+            But its not opening: why? 
+            Because we haven't defined the inbound rules for this instance. meaning our port 80 is not available for everyone
+            To define the inbound rules( means the incoming traffic to this url): 
+                Go to our instance -> Security -> Security Groups -> Inbound rules -> Edit inbound Rules -> Add Rule 
+                Give type: custom TCP 
+                Port Range: 80 
+                Source: Anywhere (can be accessed by anyone)
+                Save Rules
+            Now Refresh, your application will work.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+## Docker Networking: 
+    // Start from 1:22:00
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### IMPORTANT DOCKER COMMANDS: 
+    ## IMAGES: 
+        docker build -t <image-name> . : to build an image using the Dockerfile. `.` is context, that means Dockerfile is kept in the current dir❗️
+        docker build -t <image-nname> . -no-cache : to build an image from docker file using docker file without cache
+        docker images: List local images ❗️
+        docker rmi <image-id>/<image-name> : delete an image ❗️
+        docker image prune: Remove all unused images
+
+    ## CONTAINERS: 
+        docker run <image-name> => run the conatainer
+        docker run -d <image-name> => run the container in the background
+        // Question? what is the diff bw container running in the background and container running on terminal..? 
+            ans-> 'docker run image-name' => it runs the container and closes it.. 
+                to keep the docker container running, we should use: 'docker run -itd <image-name>/<image-id>'.[so now when you do 'docker ps', you will see the container for this image running]
+
+        docker run -p <hostPort>:<containerPort> <imageName> => Run a container and map host port to the container port.. 
+        docker start/stop <container-id>/<container-name> => start/stop the existing container
+        docker rm <container-name>/<conatainer-id> => remove the stopped container 
+        docker exec -it <container-name> sh => open a shell inside a running container 
+            for eg. we have mysql container running with id: mysql id: 
+            then: docker exec -it mysqlId bash
+                //bash opened in the mysql container 
+                bash-5.1# mysql -u root -p 
+                Enter password: root
+                then it says: welcome to mysql, your sql starts working
+        docker run -itd <image-name>/<image-id> => to keep the container running in the background. it doesn't close the container after running. You can see this cotainner running using 'docker ps' command 
+        docker ps => to list the currently running containers
+        docker ps -a => list all containers whether running or stopped 
+        docker log <container-id> => to see the logs in the container 
+        docker attach <containner-id> => to see the logs LIVE. docker gets attached to the terminal.. [To come out of it, open one more terminal and ssh inside it using ssh -i command of aws, then type =>  docker stop <container-id>/<container-name>]
+
+    
+    ## DOCKER HUB: 
+        docker login -u username => Login To docker 
+        docker push <username>/<image-name> => push an image to dockerhub.. eg. docker push johndoe/my-repo:latest
+        docker pull <image-name> => pull an image from docker hub 
+
+
+
+
             
 
 
