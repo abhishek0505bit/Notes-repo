@@ -75,6 +75,7 @@
                 - for running mysql we use: docker run -e MYSQL_ROOT_PASSWORD=root mysql, 
                     since my sql is a server, 
                     we use docker run command using the environment variable as MYSQL ROOT PASSWORD = someValue.. and run the server
+                    environment variable (-e) is provided using -e, and then we provide the env variable such as MYSQL_ROOT_PASSWORD=root 
                     mysql has started
 
     question) how do we come out of the screen, when the container is running, for eg.. we are inside mysql container..?
@@ -133,7 +134,7 @@
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Networking: 
-    // Start from 1:22:00
+    // Start from 1:42:00 []
 
 
 
