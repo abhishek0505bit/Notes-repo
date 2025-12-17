@@ -1,0 +1,47 @@
+Development lifeCycle in Real Life
+
+--------------------------------------
+
+
+Feature → staging branch → deploy to staging -> staging URL (QA tests) → staging → main branch → production URL.
+
+
+How it happens in industries: 
+1. Dev pushes feature → MR to staging → deployed to staging env.
+2. QA tests → approves.
+3. Either:
+    * Pattern 1: Merge staging → main → deploy to prod. [don’t delete the staging branch](Happens in startups)
+    * Pattern 2: Cut release branch from staging → merge release → main → deploy to prod.(Happens in big orgs)
+
+——————————————————————————
+
+Question) does the deploying to prod has to run manually or pipeline triggers it automatically?
+
+✅ Real Industrial Way (common setup)
+1. Feature branch → merge → staging→ pipeline auto-deploys to staging.myapp.com→ QA tests.
+2. Staging branch → merge → main→ pipeline triggers a manual step: "Deploy to Production".
+    * Release Manager clicks it, code goes live at www.myapp.com.
+    * Sometimes approvals are required before running the job.
+
+
+Example in GitLabCI .yml file:
+
+deploy_staging:
+  stage: deploy
+  script:
+    - echo "Deploying to staging..."
+  environment:
+    name: staging
+    url: https://staging.myapp.com
+  when: on_success   # automatic
+
+deploy_prod:
+  stage: deploy
+  script:
+    - echo "Deploying to production..."
+  environment:
+    name: production
+    url: https://www.myapp.com
+  when: manual        # must click to trigger
+  only:
+    - main
