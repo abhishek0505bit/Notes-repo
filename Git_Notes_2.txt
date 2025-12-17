@@ -1,0 +1,125 @@
+
+Problem: While doing git pull origin master from dev branch: 
+- Use: git pull origin master
+- If it shows error as: 
+From https://github.com/abhishek0505bit/gitUnderstanding
+ * branch            main       -> FETCH_HEAD
+hint: You have divergent branches and need to specify how to reconcile them.
+hint: You can do so by running one of the following commands sometime before
+hint: your next pull:
+hint: 
+hint:   git config pull.rebase false  # merge
+hint:   git config pull.rebase true   # rebase
+hint:   git config pull.ff only       # fast-forward only
+hint: 
+hint: You can replace "git config" with "git config --global" to set a default
+hint: preference for all repositories. You can also pass --rebase, --no-rebase,
+hint: or --ff-only on the command line to override the configured default per
+hint: invocation.
+
+Solution: 
+- Then do : git pull origin master —no-rebase
+- And resolve any merge conflicts which may appear
+- And create the merge request.. 
+
+————————————————————————————————————————
+How work done in real life: 
+
+# 1. Start feature branch from latest main
+git checkout main
+git pull origin main
+git checkout -b feature/xyz
+
+# do your work...
+git add .       OR          git add <file_name>
+git commit -m "xyz implementation"
+
+# 2. Daily sync (keep feature branch up to date)
+git checkout main
+git pull origin main           # update your local main
+git checkout feature/xyz
+git merge main                 # merge main into your branch
+                               # resolve conflicts if any
+
+OR [ RECOMMENDED ]
+git checkout main
+git pull
+git checkout feature/xyz 
+git pull origin master 
+# Resolve conflicts if any
+
+# 3. Before MR (final sync)
+git checkout main
+git pull origin main           # make sure main is latest
+git checkout feature/xyz
+git merge main                 # final merge of latest main
+git push origin feature/xyz
+
+OR [ RECOMMENDED ]
+git checkout main
+git pull 
+git checkout feature/xyz 
+git pull origin master 
+# resolve conflicts if any 
+git commit
+git push  
+
+# 4. Create MR from feature/xyz → main
+
+
+
+———————————————————————————————————————————
+Git stash understanding :  Good one 👍 You want to manage / reset Git’s stash storage (the temporary place where Git puts your saved changes).
+Here’s what you need:
+
+🔹 1. View your stashes
+git stash list
+You’ll see something like:
+stash@{0}: WIP on abhishek-branch: 1234abcd my changes
+stash@{1}: WIP on manager-branch: 5678efgh another change
+
+🔹 2. Apply a stash (but keep it in storage)
+git stash apply stash@{0}
+👉 Changes from stash 0 will be reapplied to your working directory, but the stash will still remain saved.
+
+🔹 3. Pop a stash (apply + delete)
+git stash pop stash@{0}
+👉 Applies the stash and removes it from the list.
+
+🔹 4. Drop (delete) a specific stash
+git stash drop stash@{0}
+👉 Just deletes that stash entry.
+
+🔹 5. Clear all stashes (reset storage completely)
+git stash clear
+👉 ⚠️ This deletes all stashes permanently (cannot be recovered).
+
+✅ So if by reset you mean remove everything from temporary storage → use git stash clear. If you only want to remove a particular stash → use git stash drop stash@{n}.
+
+Do you want me to also explain what happens internally (stash = basically a commit in a hidden branch), or just stick with the commands you’d actually use day-to-day?
+————————————————————————————————————————————
+
+DELETING A BRANCH: 
+
+To delete the branch: 
+- Git branch -d branch-name
+
+To delete the remote tracking branch, I.e, origin/branch-1, origin/branch-2 etc.: 
+- Git push origin —delete branch-1 branch-2 
+
+Hit git fetch -p, if you feel any remote tracking branch being removed in the gitlab:  - if origin/feature-x was deleted on the remote, git fetch -p removes your local pointer to origin/feature-x.
+
+————————————————————————————————————————————
+
+GIT CHERRY-PICK: 
+
+if already some changes you have committed in branch abc.. and you want to get them in branch xyz. 
+
+    - get the commit hash of the changes done in branch abc, lets say commit hash: <hash01>
+    - then checkout to branch xyz from main..
+        git checkout main                   #always go to main first (good habit)
+        git pull                            # always update the main with origin/main
+        git checkout xyz                    # then checkout to feature branch 
+        git pull origin main                # keep your branch up to date with the latest origin/main
+        git cherry-pick <hash-01>           # apply cherry-pick changes from commit <hash01>
+        # and the changes will be seen on this branch
