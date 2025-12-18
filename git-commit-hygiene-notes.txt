@@ -1,0 +1,31 @@
+LEARNING/ WATCHING LECTURE:
+PARTIAL
+commit message: 
+    study: WIP <topic_name> [Date]
+
+eg: study: WIP Docker Networking [18-Dec-25]
+
+------
+COMPLETED:
+commit message: 
+    study: complete <topic_name> [Date]
+
+eg: study: complete Docker Networking [18-Dec-25]
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+NOTES:
+
+PARTIAL: 
+commit message: 
+    docs: WIP <topic_name> notes [Date]
+
+eg: docs: WIP Docker Networking notes [18-Dec-25]
+
+-------
+COMPLETED: 
+commit message: 
+    docs: complete <topic_name> notes [Date]
+
+eg: docs: complete Docker Networking notes [18-Dec-25]
+
