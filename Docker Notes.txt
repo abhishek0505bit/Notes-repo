@@ -134,7 +134,85 @@
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Networking: 
-    // Completed. Need to write the notes.. 
+    whats the need of docker networking? 
+    ans: suppose we have two docker containers, for eg. a python app container and mysql container. 
+        then if we want the two containers to communicate with each other we would be needing a bridge to connect those two containers. 
+        and that bridge is known as Docker network. 
+        without the network, the two containers cannot communicate to each other. 
+
+    Types of Docker Network: 
+        Host 
+        Bridge (Default)
+        User defined bridge (Custom)
+        None 
+
+        Other typs [OUTDATED]: (Generally studied with docker swarm, which is not used much now. Docker swarm is replaced by KUBERNETES)
+        MACVLAN (docker swarm)
+        IPVLAN
+        Overlay
+
+    Docker network commands: 
+        docker network ls: lists the docker networks currently active 
+        docker network create <custom_network_name> -d bridge: creates a user defined network of type(driver) bridge. [here -d means driver/type of network]
+            Now if you do, `docker network ls`: it will list all the current networks including the network, which you have created just now. 
+        
+    Now we will do a project on docker networking: 
+        clone the two-tier-flask-app from github/londheshubham153
+        Inside the running ec2 instance: 
+            git clone <https_repo_url>
+            cd two-tier-flask-app 
+            now lets see: do we have anything which is required to run this app: 
+                cat app.py: to view the app.py file 
+                here you will find that, we have db connection required to run this application
+            Now we will build the image for the two-tier-flask-app and run it: 
+                docker build -t two-tier-backend . : builds the docker image using docker file in the current directory using the tag as `two-tier-backend`
+                docker run -d -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DB=devops two-tier-backend:latest :
+                    The above command will run a container with : 
+                        - docker image two-tier-backend which has latest tag.
+                        - in detached mode // -d tag tells that container has to run in background/ detached mode
+                        - publishes the port no. 5000 of the host to port 5000 of the container. // so when the container runs, we can see the outcome in port no. 5000
+                        - having env variables:
+                            MYSQL_HOST = mysql // MYSQL_HOST=mysql, we can give the host name = container name such that if we already have a container with name 'mysql'
+                            MYSQL_USER = root 
+                            MYSQL_DB = devops // this db has to be present in database, otherwise container will throw error 
+                            MYSQL_ROOT_PASSWORD = root 
+                docker ps: we will see how many containers are running 
+                    if we dont see that two-tier-backend is running, then do: 
+                        docker ps -a: we will see our container exited few seconds ago.. 
+                        docker logs <container_id>: to check the logs and error why container failed and all 
+                            it says: error: unknown server `mysql` 
+                            meaning these two containers are not in a same network 
+
+            
+            * * * * * so with the above understanding we will now perform the steps correctly: * * * * * 
+            we want to create a network and then I want to give my network to both the container.. and then the problem would be solved..
+                docker network create two-tier -d bridge : // creates a bridge network with name 'two-tier'
+                docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql : // creates and runs the container with container name=mysql using the image = mysql, and attaches the container to the network = two-tier
+                docker run -d -p 5000:5000 --network two-tier -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DB=devops two-tier-backend:latest : // creates and runs the container with the image = two-tier-backend and tag=latest, in detached mode, publishes the host port = 5000 to container port = 5000, attaches the container with the network = two-tier, with MYSQL env vars and values. Note: under MYSQL_HOST = <mysql_container_name> [Here: mysql]
+                docker ps: lists all the active containers 
+                    now we can see that our mysql as well as two-tier-backend:latest containers are running 
+                docker logs <container_id_of_two-tier-backend:latest>:
+                    we see the logs with no error. tells that our container is running perfectly fine 
+
+                Go to aws instances: 
+                    under our active ec2 instance: 
+                        click on the instance 
+                        security -> security groups (Link) -> edit inbound rules 
+                        add rule -> port range = 5000 -> Save rules 
+                        Then go to active instance -> details -> click on `public ipv4 address` link
+                        you will see the application up and running 
+                        write something and save 
+
+                        To verify whether the data saved in db or not: 
+                        execute the sql container: 
+                            docker exec -it <mysql_container_Id> bash // start the mysql container with bash
+                            //bash opened in the mysql container 
+                            bash-5.1# mysql -u root -p 
+                            Enter password: root
+                            then it says: welcome to mysql, your sql starts working
+                            mysql> use devops; 
+                            mysql> select * from messages; // or any table name which might be used in database
+                            op: you will see the data which you have saved in ui
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Volumes: 
