@@ -217,7 +217,11 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Volumes and Storage: 
     // Start from 1:47:00 [] 
+    // video lecture completed , Notes pending 
 
+------------------------------------------------------------------------------------------------------------------------------------------------------
+## Docker Compose: 
+    // Start from 1:59:00
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -263,6 +267,8 @@
         docker network create two-tier -d bridge => create a new custom docker network of driver/type bridge 
         docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql => creates and starts a container with image name = mysql with the network = two-tier, and with the provided env variables 
 
+    ## DOCKER VOLUME: 
+        docker volume ls: 
 
 
 
