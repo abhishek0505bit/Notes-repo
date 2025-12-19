@@ -251,7 +251,7 @@
         docker ps -a => list all containers whether running or stopped 
         docker log <container-id> => to see the logs in the container 
         docker attach <containner-id> => to see the logs LIVE. docker gets attached to the terminal.. [To come out of it, open one more terminal and ssh inside it using ssh -i command of aws, then type =>  docker stop <container-id>/<container-name>]
-
+        docker restart <container_id> => stops and restarts the running container with id = <container_id>
     
     ## DOCKER HUB: 
         docker login -u username => Login To docker 
@@ -259,9 +259,9 @@
         docker pull <image-name> => pull an image from docker hub 
 
     ## DOCKER NETWORK: 
-        docker network ls: shows all the active networks 
-        docker network create two-tier -d bridge: create a new custom docker network of driver/type bridge 
-        docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql: creates and starts a container with image name = mysql with the network = two-tier, and with the provided env variables 
+        docker network ls => shows all the active networks 
+        docker network create two-tier -d bridge => create a new custom docker network of driver/type bridge 
+        docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql => creates and starts a container with image name = mysql with the network = two-tier, and with the provided env variables 
 
 
 
