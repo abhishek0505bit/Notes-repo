@@ -215,7 +215,7 @@
                             op: you will see the data which you have saved in ui
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-## Docker Volumes: 
+## Docker Volumes and Storage: 
     // Start from 1:47:00 [] 
 
 
@@ -230,7 +230,7 @@
         docker image prune: Remove all unused images
 
     ## CONTAINERS: 
-        docker run <image-name> => run the conatainer
+        docker run <image-name> => creates and starts a container from an image with image name = <image_name>
         docker run -d <image-name> => run the container in the background
         // Question? what is the diff bw container running in the background and container running on terminal..? 
             ans-> 'docker run image-name' => it runs the container and closes it.. 
@@ -257,6 +257,12 @@
         docker login -u username => Login To docker 
         docker push <username>/<image-name> => push an image to dockerhub.. eg. docker push johndoe/my-repo:latest
         docker pull <image-name> => pull an image from docker hub 
+
+    ## DOCKER NETWORK: 
+        docker network ls: shows all the active networks 
+        docker network create two-tier -d bridge: create a new custom docker network of driver/type bridge 
+        docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql: creates and starts a container with image name = mysql with the network = two-tier, and with the provided env variables 
+
 
 
 
