@@ -216,8 +216,62 @@
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Volumes and Storage: 
-    // Start from 1:47:00 [] 
-    // video lecture completed , Notes pending 
+    Lets understand this with the help of eg. 
+    if we have two containers 'mysql' and 'two-tier-flask' both connected via a docker network 'two-tier-network'
+    Ideally, whatever data we are storing via application using 'two-tier-flask' app, its storing in our 'mysql' container database = 'devops'
+    so now if we do:
+        docker stop <mysql_container_Id> && docker stop <mysql_container_id> : // it will stop the mysql container and delete it.
+        and then again if we do: 
+            docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql : // it will again start a fresh container
+            docker restart <two-tier-flask-container-id>: // stops and start the two-tier-flask container so that we can have the fresh connection
+                but the problem is: all the data which we have stored in the backend via 'two-tier-flask' app using ipv4 public address:5000 is all gone.. mysql is created newly, no backup of the older data
+                ** THIS IS WHERE DOCKER VOLUMES COMES INTO THE PICTURE ** 
+    
+    Problem: 
+        what if our database or any data related container crashes.. all the data would be gone.. we dont able to fetch the data again if we create a new data related container such as 'mysql' container 
+    Solution: 
+        we use docker volumes for that, we map the local host path (here in case of ec2: ubuntu is the host) with data coming from container in our local host. 
+        so with this, data will persist in our local host as well. so everytime we create a fresh container, we only need to tell the container to: 
+            use my host data location as your docker volume storage.. so that container can able to access the already existing data
+
+        Lets see it in action: [ CREATING A DOCKER VOLUME ] [WAY: 01]
+            docker volume ls: // lists all the docker volumes currently available in the system. 
+            docker volume create mysql-data : // creates a custom docker volume with name mysql-data 
+            docker inspect mysql-data: // this is to check where my volume is created in the host[ubuntu], check 'Mountpoint' value. you will see something like: '/var/lib/docker/volumes/mysql-data/_data'
+
+        Now I want to bind my 'mysql-data' volume with the 'mysql' container: 
+            docker stop 'mysql_container_Id' && docker rm 'mysql_container_Id': // delete 'mysql' containers if any, just for the better understanding. 
+            docker run -d --name mysql --network two-tier -v mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql:
+                // -v flag is used for mapping the 'volume created in the host' with the 'mysql data' in the container 
+                // -v mysql-data:/var/lib/mysql : uses the docker volume created in the host = mysql-data and maps it with the container's path/volume where data needs to be mapped, 
+                    In containers, the mysql data is stored at path: /var/lib/mysql, so we are mapping our volume(mysql-data) to that path. 
+            docker restart <two-tier-flask-container-id>: // stops and start the two-tier-flask container so that we can have the fresh connection
+                So now if you stop and delete this mysql container.. and again create the mysql container with the same mapping: 
+                the data wont delete, you will see the same data you saw before. but not forget to restart the two-tier-flask container so that we can see the latest changes. 
+
+        To check the real data in our host [ubuntu]: 
+            cd /var/lib/docker/volumes/mysql-data/_data : // go to mountpoint/path of the volume which you have created 
+                if the above command gives error: permission denied, use the command:=> sudo su : // get the super user permission, and then hit the above command again 
+            you'll see that we have all the mysql files with our created database with name = 'devops'
+
+        [ONE MORE WAY OF CREATING A VOLUME] [WAY: 02]
+        Create the directory where you want to store the data, and copy the whole path in the docker -v command.. then the data will be mapped with the container's data 
+        Lets see how: 
+            docker stop 'mysql_container_Id' && docker rm 'mysql_container_Id': // delete 'mysql' containers if any, just for the better understanding.
+            ubuntu@ip/projects/two-tier-flask-app$ mkdir volumes 
+            ubuntu@ip/projects/two-tier-flask-app$ cd volumes 
+            ubuntu@ip/projects/two-tier-flask-app/volumes$ mkdir mysql 
+            ubuntu@ip/projects/two-tier-flask-app/volumes$ cd mysql 
+            ubuntu@ip/projects/two-tier-flask-app/volumes/mysql$ pwd 
+            /home/ubuntu/volumes/mysql 
+
+                Now you can use the above host path in your container creation command and the data will persist.
+                    here's how to use that command: 
+                    docker run -d --name mysql --network two-tier -v /home/ubuntu/volumes/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
+
+    
+    NOTE: WE BASICALLY MAP OUR LOCAL HOST PATH TO THE CONTAINER'S DATA STORAGE PATH, SO THAT OUR DATA SHOULD PERSIST. SHOULD NOT GET LOST AFTER THE CONTAINER CRASHES OR DELETED
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Compose: 
@@ -268,20 +322,10 @@
         docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql => creates and starts a container with image name = mysql with the network = two-tier, and with the provided env variables 
 
     ## DOCKER VOLUME: 
-        docker volume ls: 
-
-
-
-
-            
-
-
-
-
-        
-
-
-                
-
-    
-
+        docker volume ls: lists all the volumes currently available in your system 
+        docker volume create mysql-data: // creates a custom docker volume with name mysql-data
+        docker inspect mysql-data: // this is to check where my volume is created in the host[ubuntu], check 'Mountpoint' value. you will see something like: '/var/lib/docker/volumes/mysql-data/_data'
+        docker run -d --name mysql --network two-tier -v mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql:
+                // -v flag is used for mapping the 'volume created in the host' to the 'mysql data' in the container 
+                // -v mysql-data:/var/lib/mysql : uses the docker volume created in the host = mysql-data and maps it with the container's path/volume where data needs to be mapped, 
+                    In containers, the mysql data is stored at path: /var/lib/mysql, so we are mapping our volume(mysql-data) to that path. 
