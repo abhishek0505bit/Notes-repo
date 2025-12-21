@@ -275,8 +275,14 @@
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Compose: 
-    // Start from 1:59:00
+    // completed video docker compose 
 
+    // IN practical, if not able to execute: docker compose up, that might be due to permission issue: use => sudo su.. then do docker compose up
+    since space got full so not able to use.. ec2 now.. cant perform more practicals.. 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+## Docker Registry
+    // start from 2:19:00
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### IMPORTANT DOCKER COMMANDS: 
