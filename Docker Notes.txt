@@ -275,10 +275,108 @@
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Compose: 
-    // completed video docker compose 
+    Docker compose is used to automate the docker workflows. 
+    It is a configuration file i.e, .yml/.yaml file.
+    It is used to create the containers using a simple .yml/.yaml file
+        rather than writing: docker build and run commands again and again to run the containers, we will use docker compose, that will build and run multiple containers.. using a single command. 
+    
+    Install docker compose: 
+        sudo apt-get install docker-compose-v2: // this is to install docker compose 
 
-    // IN practical, if not able to execute: docker compose up, that might be due to permission issue: use => sudo su.. then do docker compose up
-    since space got full so not able to use.. ec2 now.. cant perform more practicals.. 
+    Lets create a docker compose file from scratch: 
+        clone two-tier-flask-app, if not already cloned
+        cd two-tier-flask-app: // navigate to two-tier-flask-app 
+        ls: // lists all the contents in the repo. 
+        rm -v docker-compose.yml: // remove existing docker compose file, we will create from the scratch
+        vim docker-compose.yml: // create and open the docker-compose file in vim editor 
+            Below are the two docker compose files:
+            DOCKER FILE 1: 
+                version: "3.8"
+                services:
+                    mysql:
+                        image: mysql
+                        container_name: mysql
+                        environment:
+                            MYSQL_ROOT_PASSWORD: root
+                            MYSQL_DATABASE: devops
+                            MYSQL_USER: admin
+                            MYSQL_PASSWORD: admin
+                        volumes:
+                            - ./mysql-data:/var/lib/mysql
+                        networks:
+                            - two-tier
+                        healthcheck:
+                            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+                            interval: 10s
+                            timeout: 5s
+                            retries: 5
+                            start_period: 60s
+
+                    flask-app:
+                        image: two-tier-flask-app:latest
+                        container_name: flask-app
+                        ports:
+                            - "5000:5000"
+                        environment:
+                            MYSQL_HOST: mysql
+                            MYSQL_USER: root
+                            MYSQL_PASSWORD: root
+                            MYSQL_DB: devops
+                        depends_on:
+                            - mysql
+                        networks:
+                            - two-tier
+                        restart: always
+                        healthcheck:
+                            test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+                            interval: 10s
+                            timeout: 5s
+                            retries: 5
+                            start_period: 30s
+
+                networks:
+                    two-tier:       
+            `THE ABOVE FILE USES THE ALREADY BUILT IMAGE 'two-tier-flask-app:latest' USING DOCKER BUILD, TO CREATE AND RUN THE FLASK-APP CONTAINER`                                                               
+
+            DOCKER FILE 2: 
+                // The other way.. for flask image we can use is build image directly from docker compose using, rather than using already built/existing image:     
+                `build:		`
+                `      context: . `
+
+                In the below docker compose.yml file: 
+                    flask-app:
+                        build:
+                            context: .
+                        container_name: flask-app
+                        ports:
+                            - "5000:5000"
+                        environment:
+                            MYSQL_HOST: mysql
+                            MYSQL_USER: root
+                            MYSQL_PASSWORD: root
+                            MYSQL_DB: devops
+                        depends_on:
+                            - mysql
+                        networks:
+                            - two-tier
+                        restart: always
+                        healthcheck:
+                            test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+                            interval: 10s
+                            timeout: 5s
+                            retries: 5
+                            start_period: 30s
+
+
+                    Note: but for this you have to first switch to super user using `sudo su` 
+
+        now your docker compose file is created. 
+            docker compose up: // this command is use to run the docker-compose.yml in the current directory (Here, two-tier-flask-app)
+        once the code is running, do:
+            go to ipv4 public address, and make it http and attach port 5000 , for eg. https://172.0.0.32:5000, you will see the UI there.. 
+
+
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Registry
@@ -335,3 +433,81 @@
                 // -v flag is used for mapping the 'volume created in the host' to the 'mysql data' in the container 
                 // -v mysql-data:/var/lib/mysql : uses the docker volume created in the host = mysql-data and maps it with the container's path/volume where data needs to be mapped, 
                     In containers, the mysql data is stored at path: /var/lib/mysql, so we are mapping our volume(mysql-data) to that path. 
+    
+    ## DOCKER COMPOSE: 
+        sudo apt-get docker-compose-v2: // to install the docker compose in your machiine
+        docker compose up: // to run the docker-compose.yml file in the current directory 
+
+    ## DOCKER CLEANUP: 
+        docker system prune -af: // deletes everything docker is not using without confirmation 
+        docker volume prune -f: // deltes all unused docker volumes 
+
+    ## DOCKER STORAGE CHECK IN FILESYSTEM: 
+        docker system df: // shows how much space docker is using in your system. 
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+EXTRAS: 
+    1) Increase the size of aws volume:
+
+        AFTER successfully increasing the EBS volume to 15 GB in AWS volumes attached to our aws ec2 instance, but your root partition + filesystem are still using only ~7 GB.
+        Now we just need to extend the partition and filesystem inside the EC2 instance.
+
+            What your output tells us (important)
+                From lsblk:
+                    nvme0n1        15G   disk   ✅ (EBS volume resized)
+                    └─nvme0n1p1     7G   part   /   ❌ (root partition not expanded)
+                So:
+                    * Disk size = 15G ✅
+                    * Root partition = 7G ❌
+                    * Filesystem = 6.8G ❌
+                This is why df -h still shows 100% usage.
+
+            Fix: Extend root partition + filesystem (SAFE)
+            You are on Ubuntu, root is /dev/nvme0n1p1.
+            Step 1: Grow the partition
+                Use growpart (already available on Ubuntu EC2).
+                    sudo growpart /dev/nvme0n1 1 : // this command is used to grow the partition size 
+                Expected output (example):
+                CHANGED: partition=1 start=2048 old: size=... new: size=...
+
+            Step 2: Resize the filesystem
+                Ubuntu root filesystem is ext4, so run:
+                    sudo resize2fs /dev/nvme0n1p1 : // to resize the filesystem to match the new partition size 
+                This expands / to use the full partition.
+
+            Step 3: Verify
+                df -h: // shows disk usage in human readable format. ( df means disk free )
+            You should now see something like:
+                Filesystem      Size  Used Avail Use%
+                /dev/root        15G   7G    7G   ~50%
+            🎉 Problem solved
+
+            Why this happens (important learning)
+            AWS only:
+                * Increases disk size
+                * ❌ Does NOT auto-expand partitions or filesystems
+                You must always do:
+                    1. Resize EBS
+                    2. Extend partition
+                    3. Extend filesystem
+
+            Optional (Docker cleanup to avoid this again)
+                Since Docker filled your disk earlier, run:
+                    docker system prune -af: // deletes everything docker is not using without confirmation 
+                    docker volume prune -f: // deltes all unused docker volumes 
+                Then check:
+                    docker system df: // shows how much space docker is using in your system. 
+
+            Cost clarity (no confusion)
+                * Free tier: 30 GB total EBS free for 12 months
+                * You increased from 8 GB → 15 GB
+                * ✅ Still within free tier
+                * ❌ No extra charges (as long as total ≤ 30 GB)
+
+            TL;DR (copy-paste fix)
+                sudo growpart /dev/nvme0n1 1 :// grow partition
+                sudo resize2fs /dev/nvme0n1p1: // resize filesystem to match the partition size
+                df -h: // see disk usage status 
