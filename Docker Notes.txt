@@ -41,8 +41,8 @@
             first we need to add the user in the docker group with commmand: `sudo usermod -aG docker $USER`
             then we need to refresh the groups: `newgrp docker`
             now run :  `docker ps` [It wont give error now]
------------------------------------------------------------------------------------------------------------------------------------------
 
+-----------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Images: 
     we have dockerfile: it contains a set of instructions on how to build a docker image.
     docker image is the result of building a docker file `docker build -t my-node-app .`
@@ -85,8 +85,8 @@
         2) we can again connect to the aws instance.. and go to cd/downloads and start a new instance:
             then we can say: docker stop <docker_container_id>, this will stop the container.. and we can see the terminal is unblocked by sql or any other
             container
-------------------------------------------------------------------------------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Dockerfile for Java Application: 
     - we will clone the simple-java-docker repo from londheshubham153 git account, 
     - we will open our aws ec2 ubuntu instance in terminal: 
@@ -272,7 +272,6 @@
     
     NOTE: WE BASICALLY MAP OUR LOCAL HOST PATH TO THE CONTAINER'S DATA STORAGE PATH, SO THAT OUR DATA SHOULD PERSIST. SHOULD NOT GET LOST AFTER THE CONTAINER CRASHES OR DELETED
 
-
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Compose: 
     Docker compose is used to automate the docker workflows. 
@@ -375,14 +374,11 @@
         once the code is running, do:
             go to ipv4 public address, and make it http and attach port 5000 , for eg. https://172.0.0.32:5000, you will see the UI there.. 
 
-
-
-
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Registry
     // start from 2:19:00
-------------------------------------------------------------------------------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------------------------------------------------------------------------------
 ### IMPORTANT DOCKER COMMANDS: 
     ## IMAGES: 
         docker build -t <image-name> . : to build an image using the Dockerfile. `.` is context, that means Dockerfile is kept in the current dir❗️
@@ -444,9 +440,6 @@
 
     ## DOCKER STORAGE CHECK IN FILESYSTEM: 
         docker system df: // shows how much space docker is using in your system. 
-
-
-
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 EXTRAS: 
