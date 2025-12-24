@@ -376,7 +376,28 @@
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Docker Registry
-    // start from 2:19:00
+    suppose we have mulitple images in my system, for eg: 
+    docker images: // it shows multiple images i have in my system. 
+    I want to move it to docker hub.. for that lets make sure docker login is working fine or not. 
+    docker login: // it should work fine.. for docker registry or docker hub commands to work properly 
+    docker image tag two-tier-flask-app abhishek0505bit/two-tier-flask-app:latest : // this will create one more image using the existing image: two-tier-flask-app 
+    docker push abhishek0505bit/two-tier-flask-app:latest: // to push this image to docker hub, it should have the <username>/<image_name> format, which will push the image under the docker's <username>
+    once this is done: 
+        we can directly give the image name in the docker compose such as: 
+            under flask: 
+                image: abhishek0505bit/two-tier-flask-app:latest :// bring the image from the public repo: abhishek0505bit, image name: two-tier-flask-app:latest 
+    so now your image is pushed to docker hub, you can use: 
+        docker push <dockerhub_username>/<local_image>: pushes the image to docker hub 
+        docker pull <image_present_in_docker_hub>: // pulls the image from docker hub from public repo.. and then use run command, docker run <image_name> : // it will run the container 
+        similarly you can use `docker compose up/down` commands with public images in docker hub. 
+
+    Note: 
+        To push the local images in docker hub, we should always tag the <existing_local_image> in the below format: 
+            after `docker login` using abhishek0505bit account, do below steps: 
+            docker image tag <existing_local_image> <dockerhub_username>/<image_name_you_want_in_docker_hub> : // this will tag my existing image to the new image that will be pushed to docker hub 
+                eg: docker image tag two-tier-flask-app abhishek0505bit/two-tier-flask-app:latest
+            docker push <dockerhub_username>/<existing_local_image>: // once the image is tagged, push the image to docker hub in abhishek0505bit account 
+                eg: docker push abhishek0505bit/two-tier-flask-app:latest
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ### IMPORTANT DOCKER COMMANDS: 
@@ -432,11 +453,22 @@
     
     ## DOCKER COMPOSE: 
         sudo apt-get docker-compose-v2: // to install the docker compose in your machiine
-        docker compose up: // to run the docker-compose.yml file in the current directory 
+        docker compose up: // to create and run the docker-compose.yml file in the current directory 
+        docker compose down: // to stop and remove the running containers which ran using docker compose command 
+
 
     ## DOCKER CLEANUP: 
         docker system prune -af: // deletes everything docker is not using without confirmation 
         docker volume prune -f: // deltes all unused docker volumes 
+        docker rmi -f $(docker images -a -q): // remove all the images 
+        docker compose up -d --build: // up: Starts the entire application defined in your YAML file.
+                                        -d: Detached mode. Runs everything in the background (gives you your terminal back).
+                                        --build: Forces Docker to re-package your code into a new image before starting (essential if you changed your code).
+                                        --build
+                                        The Problem: If you change your code (like a Python script or a Dockerfile), Docker often thinks, "I already have an image for this," and it won't reflect your new changes.
+                                        The Fix: This flag forces Docker to rebuild the images from your source code before starting the containers.
+                                        When to use: Use this whenever you have made a change to your application's code and want to see that change live.
+
 
     ## DOCKER STORAGE CHECK IN FILESYSTEM: 
         docker system df: // shows how much space docker is using in your system. 
