@@ -401,18 +401,106 @@
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Multi-stage docker builds: 
-    // start from 2:33:00 
+    multi stage docker build is the concept where we utilize the docker build in stages.
+    for eg: downloading the libraries using the image : python:3.9(takes around 1.01 GB space ) and then
+        on the other stage: we use python: 3.9 sim, which helps us to create final runtime image(around 140 MB)
+        so with this we are saving a lot of space and also getting our work done. 
+    
+    sample multistage docker file: ---------------------------------
+        # ---- Stage 1: Build & install deps (full Python image)
+        FROM python:3.9 AS builder
+
+        WORKDIR /app
+
+        COPY requirements.txt .
+        RUN pip install --user -r requirements.txt
+
+
+        # ---- Stage 2: Final runtime image (lightweight slim image)
+        FROM python:3.9-slim
+
+        WORKDIR /app
+
+        # Copy installed packages from builder stage
+        COPY --from=builder /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
+
+        # Add app code
+        COPY . .
+
+        CMD ["python", "app.py"]
+
+        ----------------------------------------------------------------
+
+        // so whats happening in the above docker file: 
+            Stage 1 (Builder)
+                - Uses python:3.9
+                - Installs dependencies
+                - Has compilers, tools, etc.
+
+            Stage 2 (Runtime)
+                - Uses python:3.9-slim
+                - Copies only installed packages + app code
+                - No build tools → much smaller image
+            
+        // This helps us to: 
+            - Keep the final image small & fast
+            - Avoid shipping build tools, caches, compilers, etc.
+            - Improve security & performance
+
+    To create an image from the docker file, we will simply use our typical docker build command, and then we can see the docker image which is built is around 140 MB which is very small in size. 
+    and run the docker container using docker run command by giving port (if specified in dockerfile.)
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Monitoring and Logging in docker
-    // start from 2:45:00 
+    docker logs <container_id> : // to see the logs of the container with id = <container_id>
+
+    other way is to write the logs in the file `nohup.out`:
+         nohup docker attach <container_id> & :// this command will write all the logs in the file created as `nohup.out`
+         cat nohup.out: // to view the content under `nohup.out`
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Orchestrating Docker with Kubernetes (Introduction):
-    // start from 2:48:00
+    kubernetes is used to orchestrate containers.. i.e, to manage containers.
+    it helps us to overcome the problem of containers crash which was running, and due to which the whole app goes down.
+    It automatically manages deployment, scaling, networking, and health-checks of containers across multiple machines.
+
+    Why do we need Kubernetes?
+        When apps run in containers (Docker), problems arise at scale:
+
+        Before Kubernetes (manual / VM era):
+            - Apps were deployed manually on servers
+            - Scaling required new servers & manual setup
+            - If a server crashed — app went down
+            - Difficult to manage 100s of containers
+            - No automatic restart / healing
+
+        With Kubernetes:
+            - Containers are automatically scheduled on nodes
+            - If a container fails → it restarts itself
+            - Auto-scales apps based on load
+            - Handles rolling updates & rollbacks
+            - Efficient resource usage across machines
+
+        In short:
+            Kubernetes solves scaling, reliability, automation & self-healing of containerized apps.
+
+    Key Kubernetes Concepts (Simple Meaning)
+        Term	        Meaning (Simple)
+        --------------------------------------------------------
+        Cluster	        A group of machines managed by Kubernetes (collection of nodes/machines)
+        Node	        A single machine (VM or physical server) in the cluster
+        Pod	            Smallest unit — runs one or more containers together (collection of containers, usually it has one container but can have multiple when they must run together)
+        Container	    Application runtime (e.g., a Docker container)
+        Deployment	    Defines how many pods & manages rolling updates (collection of pods)
+        ReplicaSet	    Ensures required number of pod copies are running
+        Service	        Provides stable network access to pods
+        Namespace	    Logical grouping / isolation inside cluster
+        Ingress	        Routes external traffic (like API gateway)
+        ConfigMap	    Stores configuration (non-secret values)
+        Secret	        Stores sensitive values (tokens, passwords)
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-### IMPORTANT DOCKER COMMANDS: 
+### IMPORTANT DOCKER COMMANDS:  
     ## IMAGES: 
         docker build -t <image-name> . : to build an image using the Dockerfile. `.` is context, that means Dockerfile is kept in the current dir❗️
         docker build -t <image-nname> . -no-cache : to build an image from docker file using docker file without cache
@@ -468,8 +556,16 @@
         docker compose up: // to create and run the docker-compose.yml file in the current directory 
         docker compose down: // to stop and remove the running containers which ran using docker compose command 
 
+    ## DOCKER LOGS: 
+        docker logs <container_id> : // to see the logs of the container with id = <container_id>
+
+        other way is to write the logs in the file `nohup.out`:
+            nohup docker attach <container_id> & :// this command will write all the logs in the file created as `nohup.out`
+            cat nohup.out: // to view the content under `nohup.out`
 
     ## DOCKER CLEANUP: 
+        docker stop $(docker ps -aq): // stops all the containers
+        docker rm $(docker ps -aq): // deletes all the containers
         docker system prune -af: // deletes everything docker is not using without confirmation 
         docker volume prune -f: // deltes all unused docker volumes 
         docker rmi -f $(docker images -a -q): // remove all the images 
@@ -480,7 +576,6 @@
                                         The Problem: If you change your code (like a Python script or a Dockerfile), Docker often thinks, "I already have an image for this," and it won't reflect your new changes.
                                         The Fix: This flag forces Docker to rebuild the images from your source code before starting the containers.
                                         When to use: Use this whenever you have made a change to your application's code and want to see that change live.
-
 
     ## DOCKER STORAGE CHECK IN FILESYSTEM: 
         docker system df: // shows how much space docker is using in your system. 
