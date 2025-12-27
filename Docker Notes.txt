@@ -401,6 +401,7 @@
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Multi-stage docker builds: 
+    preRequisite: clone the flask-app-ecs from github/londheshubham153
     multi stage docker build is the concept where we utilize the docker build in stages.
     for eg: downloading the libraries using the image : python:3.9(takes around 1.01 GB space ) and then
         on the other stage: we use python: 3.9 sim, which helps us to create final runtime image(around 140 MB)
@@ -498,6 +499,16 @@
         Ingress	        Routes external traffic (like API gateway)
         ConfigMap	    Stores configuration (non-secret values)
         Secret	        Stores sensitive values (tokens, passwords)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+## Project 1: 
+    clone django-notes-app/ from github/londheshubham153
+    // completed project 1, notes pending
+    
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+## Project 2: 
+    // 3:51:00
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ### IMPORTANT DOCKER COMMANDS:  
