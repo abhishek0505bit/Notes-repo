@@ -1,0 +1,14 @@
+## Introduction Foundations of AI/ ML and DL: 
+    // completed: 
+
+## Rule based AI: 
+    // completed 
+
+## Introduction to machine learning: 
+    // completed
+
+## the core of ml: training, fitting and prediction: 
+    // completed
+
+## the human analogy: how a child learns: 
+    // start from [31:00]
