@@ -1,14 +1,36 @@
-## Introduction Foundations of AI/ ML and DL: 
-    // completed: 
+How machine learning works: 
+    basically we take the historical data, and label it(provide the output to that data), and then we train the machine learning model on that data. 
+    and then we can use the model to predict the output for the new data.
 
-## Rule based AI: 
-    // completed 
+---------------------------------------------------------------------------------------------------------------------------------------
+## Supervised learning: 
+    It has two types: 
+        - Regression: focuses on the numerical output/ values. 
+            - Linear Regression:
+            - Ridge
+            - Lasso
+        - Classification: focuses on the categorical output/ values. (yes/ no kind of op )
+            for eg. whether a person is diabetic or not (yes/ no)
+                - Trees
+                - SVM 
+                - KNN 
 
-## Introduction to machine learning: 
-    // completed
+    ---------------------------------------------------------------------------------------------------------------------------------------
+    ### Understanding the Straight Line equation (y=mx+c): Linear Regression:
+        // completed
 
-## the core of ml: training, fitting and prediction: 
-    // completed
+    ---------------------------------------------------------------------------------------------------------------------------------------
+    ### Multiple Linear regression using features: 
+        // start from [1:17:34]
 
-## the human analogy: how a child learns: 
-    // start from [31:00]
+
+---------------------------------------------------------------------------------------------------------------------------------------
+## Unsupervised learning:
+    - K means
+    - PCA 
+    - Collaborative filtering
+
+---------------------------------------------------------------------------------------------------------------------------------------
+## General Notes: 
+    Inputs: also called FEATURES/ INDEPENDENT VARIABLES. (represented by x)
+    Outputs: also called LABELS/ DEPENDENT VARIABLES. (represented by y)
