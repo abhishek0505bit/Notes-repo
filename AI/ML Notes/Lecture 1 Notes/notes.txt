@@ -14,14 +14,39 @@ How machine learning works:
                 - Trees
                 - SVM 
                 - KNN 
+---------------------------------------------------------------------------------------------------------------------------------------
+FOR CASE STUDIES: DO STUDY, PRACTICALS AND THEN NOTES: 
 
-    ---------------------------------------------------------------------------------------------------------------------------------------
-    ### Understanding the Straight Line equation (y=mx+c): Linear Regression:
-        // completed
+## CASE STUDY 1: ADVERTISING SALES PREDICTION : 
+ // study completed.. from (1:25:00 to 2:11:00)
+ // PRACTICAL pending FROM (1:25:00 to 2:11:00) on a new google collab jupyter notebook.
 
-    ---------------------------------------------------------------------------------------------------------------------------------------
-    ### Multiple Linear regression using features: 
-        // start from [1:17:34]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------
