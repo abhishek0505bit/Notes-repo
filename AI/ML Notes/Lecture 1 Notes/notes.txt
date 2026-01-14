@@ -21,6 +21,10 @@ FOR CASE STUDIES: DO STUDY, PRACTICALS AND THEN NOTES:
  // study completed.. from (1:25:00 to 2:11:00)
  // PRACTICAL pending FROM (1:25:00 to 2:11:00) on a new google collab jupyter notebook.
 
+ IN PROGRESS: 
+ // done till demo.head(),
+ // will continue after demo.head() from the google collab.
+
 
 
 
