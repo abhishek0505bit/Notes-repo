@@ -24,6 +24,7 @@ FOR CASE STUDIES: DO STUDY, PRACTICALS AND THEN NOTES:
  IN PROGRESS: 
  // done till sns.pairplot(),
  // will continue from heatmap(), taking other notebook as a reference. 
+ // completed seaborn lecture. 
 
 
 
