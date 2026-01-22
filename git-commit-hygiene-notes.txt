@@ -29,3 +29,6 @@ commit message:
 
 eg: docs: complete Docker Networking notes [18-Dec-25]
 
+------------------------------------------------------------------------------------------------------------------------
+REFER NOTION NOTES FOR MORE INFO: 
+https://www.notion.so/Git-Commit-Hygiene-Best-Practices-2354e5d86a8a8063a7e4db6ec72d815b?source=copy_link
