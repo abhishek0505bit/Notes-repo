@@ -1,0 +1,105 @@
+Mean: 
+
+
+standard deviation: 
+    Standard deviation tells us how spread out the data is from its average (mean).
+    In simple words: 
+        - Low standard deviation → values are close to the mean
+        - High standard deviation → values are far from the mean
+    It tells us: 
+        On average, how far are the data points from the center?
+        Standard deviation measures how spread out data is from the mean, and ML uses it to normalize features so no feature dominates just because of scale.
+
+    OPTIONAL: [Step by step explanation of standard deviation]
+        Real-life intuition
+
+            1️⃣ Imagine two classes:
+
+                Class A marks:
+                48, 49, 50, 51, 52
+
+                Class B marks:
+                10, 30, 50, 70, 90
+
+
+                Both have the same average (mean = 50)
+                But:
+
+                    Class A students are very similar → low spread
+
+                    Class B students are very different → high spread
+
+                    👉 Standard deviation captures this spread
+
+            2️⃣ How do we calculate standard deviation? (step-by-step)
+
+                Let’s say we have this data:
+
+                X = [2, 4, 6, 8]
+
+                🔹 Step 1: Calculate the mean
+                    mean = (2 + 4 + 6 + 8) / 4 = 5
+      
+                🔹 Step 2: Find deviation from the mean
+
+                    Subtract the mean from each value:
+
+                    Value	Deviation (x − mean)
+                    2	        −3
+                    4	        −1
+                    6	        +1
+                    8	        +3
+
+                🔹 Step 3: Square the deviations
+
+                    (so negatives don’t cancel positives)
+
+                    Deviation	Squared
+                    −3	            9
+                    −1	            1
+                    +1	            1
+                    +3	            9
+
+                🔹 Step 4: Take the average of squared deviations
+
+                    (This is called variance)
+                    variance= (9+1+1+9)/4 = 5
+
+                🔹 Step 5: Take the square root
+                    standard deviation = square root of 5 ≈ 2.24            
+                    ✅ That’s it — you just computed standard deviation.
+
+            3️⃣ What does this number (2.24) mean?
+
+                It means:
+
+                On average, the values are about 2.24 units away from the mean (5).
+
+                So most values lie roughly between:
+
+                5 − 2.24  and  5 + 2.24
+                ≈ 2.76 to 7.24
+
+
+                Which matches our data [2, 4, 6, 8].
+
+            4️⃣ Why standard deviation is used in ML (VERY IMPORTANT)
+
+                Remember this formula from scaling:
+                    scaled value = (x−mean) / standard deviation
+                
+                    ​
+
+                What this does:
+
+                    Subtract mean → centers data at 0
+
+                    Divide by std → normalizes spread
+
+                After scaling:
+
+                    Mean becomes 0
+
+                    Std deviation becomes 1
+
+                    This makes different features comparable.

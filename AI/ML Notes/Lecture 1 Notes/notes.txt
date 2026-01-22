@@ -2,6 +2,10 @@ How machine learning works:
     basically we take the historical data, and label it(provide the output to that data), and then we train the machine learning model on that data. 
     and then we can use the model to predict the output for the new data.
 
+NOTE: 
+- add general notes to notes.txt
+- add ml practical notes to ipynb file.
+
 ---------------------------------------------------------------------------------------------------------------------------------------
 ## Supervised learning: 
     It has two types: 
@@ -18,14 +22,11 @@ How machine learning works:
 FOR CASE STUDIES: DO STUDY, PRACTICALS AND THEN NOTES: 
 
 ## CASE STUDY 1: ADVERTISING SALES PREDICTION : 
- // study completed.. from (1:25:00 to 2:11:00)
- // PRACTICAL pending FROM (1:25:00 to 2:11:00) on a new google collab jupyter notebook.
+ // completed
 
- IN PROGRESS: 
- // done till sns.pairplot(),
- // will continue from heatmap(), taking other notebook as a reference. 
- // completed seaborn lecture. 
-// completed till 2:50:00
+
+## Scikit-learn video started: 
+    // completed till 11:35:00
 
 
 
