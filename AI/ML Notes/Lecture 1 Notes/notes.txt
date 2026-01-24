@@ -26,8 +26,7 @@ FOR CASE STUDIES: DO STUDY, PRACTICALS AND THEN NOTES:
 
 
 ## Scikit-learn video started: 
-    // completed till 11:35:00
-    // completed till 20:00 seconds
+    // completed topic: datasets: till 23:13 seconds
 
 
 
