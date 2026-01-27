@@ -26,9 +26,10 @@ FOR CASE STUDIES: DO STUDY, PRACTICALS AND THEN NOTES:
 
 
 ## Scikit-learn video started: 
-    // completed topic: splitting data : till 33:00 seconds
-
-
+    // TOPIC: PRE PROCESSING 
+    // TOPIC STUDY: PENDING 
+    // TOPIC PRACTICAL: PENDING
+    // TOPIC NOTES: PENDING
 
 
 
