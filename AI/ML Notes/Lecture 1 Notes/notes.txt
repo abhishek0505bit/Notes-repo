@@ -27,7 +27,9 @@ FOR CASE STUDIES: DO STUDY, PRACTICALS AND THEN NOTES:
 
 ## Scikit-learn video started: 
     // TOPIC: PRE PROCESSING 
-    // TOPIC STUDY: PENDING 
+    // TOPIC STUDY: COMPLETED 
+        learn about standard scaler, also notes on it.. + practicals 
+            fit_transform.. 
     // TOPIC PRACTICAL: PENDING
     // TOPIC NOTES: PENDING
 
