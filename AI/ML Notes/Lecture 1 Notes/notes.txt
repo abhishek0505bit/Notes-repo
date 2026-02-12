@@ -26,12 +26,15 @@ FOR CASE STUDIES: DO STUDY, PRACTICALS AND THEN NOTES:
 
 
 ## Scikit-learn video started: 
-    // TOPIC: FEATURE ENCODING 
+    // TOPIC: Classification
     // TOPIC STUDY: COMPLETED 
-    // TOPIC PRACTICAL: COMPLETED
-    // TOPIC NOTES + DIVE DEEP + DOUBTS: COMPLETED but also do the last prompt in Chat GPT.. 
+    // TOPIC PRACTICAL: Pending
+    // TOPIC NOTES + DIVE DEEP + DOUBTS: Pending
 
-
+        doubts: 
+            what are scale sensitive algorithms 
+            array([0]) in numpy means just a zero or it represents an element at 0th index..?
+            one more time understand: scaled, fit_transform(X_train), and then transform(X_test)
 
 
 
