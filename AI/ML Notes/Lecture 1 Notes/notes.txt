@@ -21,52 +21,18 @@ NOTE:
 ---------------------------------------------------------------------------------------------------------------------------------------
 FOR CASE STUDIES: DO STUDY, PRACTICALS AND THEN NOTES: 
 
-## CASE STUDY 1: ADVERTISING SALES PREDICTION : 
- // completed
+DAY WISE PROGRESS: ✏️
+## CASE STUDY 2: CONCRETE CASE STUDY : [pending]
+     TOPIC: till 5:35 COMPLETED ✅
 
+     STUDY (Theory): COMPLETED ✅
 
-## Scikit-learn video started: 
-    // TOPIC: Classification
-    // TOPIC STUDY: COMPLETED 
-    // TOPIC PRACTICAL: Pending
-    // TOPIC NOTES + DIVE DEEP + DOUBTS: Pending
+     DOUBTS + UNDERSTANDING: PENDING 
+        - Pairplot in deep (also other different histograms and other graphs)
+        - Data.corr()
+        - Heatmap
+        - R squared and accuracy
 
-        doubts: 
-            what are scale sensitive algorithms 
-            array([0]) in numpy means just a zero or it represents an element at 0th index..?
-            one more time understand: scaled, fit_transform(X_train), and then transform(X_test)
+     TOPIC PRACTICAL: PENDING
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----------------------------------------------------------------------------------------------------------------------------------------
-## Unsupervised learning:
-    - K means
-    - PCA 
-    - Collaborative filtering
-
----------------------------------------------------------------------------------------------------------------------------------------
-## General Notes: 
-    Inputs: also called FEATURES/ INDEPENDENT VARIABLES. (represented by x)
-    Outputs: also called LABELS/ DEPENDENT VARIABLES. (represented by y)
+     TOPIC NOTES: PENDING
