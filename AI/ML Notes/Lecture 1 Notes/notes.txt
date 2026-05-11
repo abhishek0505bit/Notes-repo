@@ -33,6 +33,6 @@ DAY WISE PROGRESS: ✏️
         - Heatmap
         - R squared and accuracy
 
-     TOPIC PRACTICAL: PENDING
+     TOPIC PRACTICAL: completed 
 
-     TOPIC NOTES: PENDING
+     TOPIC NOTES: completed 
